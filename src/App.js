@@ -8,7 +8,7 @@ function App() {
     <div>
       <div className="card shadow m-5">
         <div className="container">
-          <div className="text-center m-5">
+          <div className="text-center mt-5">
             <h1>Asignación de eventos</h1>
           </div>
         </div>
