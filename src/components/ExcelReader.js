@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 import { CloudDownload } from 'react-bootstrap-icons';
 import $ from 'jquery';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
+import language from 'datatables.net-plugins/i18n/es-ES.mjs';
 import 'datatables.net';
 
 import OperadoresList from './OperadoresList';
@@ -25,7 +26,11 @@ function ExcelReader() {
 
   useEffect(() => {
     if (filteredData) {
-      $('#dataTable').DataTable();
+      if (!$.fn.DataTable.isDataTable('#dataTable')) {
+        $('#dataTable').DataTable({
+          language: language,
+        });
+      }
     }
   }, [filteredData]);
 
@@ -61,16 +66,12 @@ function ExcelReader() {
     const value = e.target.value;
     const prevValue = tableData[rowIndex].Operador;
 
-    // Actualizar el operador en el array de la tabla
     setTableData((prevData) => {
       const newData = [...prevData];
       newData[rowIndex].Operador = value;
       return newData;
     });
-
-    // Realizar la suma solo si se cambia el valor
     if (prevValue !== value) {
-      // Restar la suma para el operador anterior
       if (prevValue) {
         setOperadoresSum((prevSum) => {
           const updatedSum = { ...prevSum };
@@ -81,8 +82,6 @@ function ExcelReader() {
           return updatedSum;
         });
       }
-
-      // Actualizar la suma para el operador actual
       if (value.trim() !== '') {
         setOperadoresSum((prevSum) => {
           const updatedSum = { ...prevSum };
@@ -93,9 +92,7 @@ function ExcelReader() {
     }
   };
 
-  const handleBlur = (rowIndex) => {
-    // No es necesario realizar nada en este punto si la suma se actualiza al cambiar el input
-  };
+  const handleBlur = (rowIndex) => {};
 
   return (
     <div>
@@ -152,8 +149,6 @@ function ExcelReader() {
                     <input
                       type="text"
                       className="form-control form-control-sm border-0"
-                      id="asignacionDiaria"
-                      aria-describedby="asignacionDiaria"
                       value={tableData[rowIndex].Operador}
                       onBlur={() => handleBlur(rowIndex)}
                       onChange={(e) => handleInputChange(e, rowIndex)}
