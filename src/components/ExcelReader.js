@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import { CloudDownload } from 'react-bootstrap-icons';
-import $ from 'jquery';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
-import language from 'datatables.net-plugins/i18n/es-ES.mjs';
 import 'datatables.net';
 
 import OperadoresList from './OperadoresList';
@@ -16,6 +14,7 @@ function ExcelReader() {
   const [tableData, setTableData] = useState([]);
   const [operadoresSum, setOperadoresSum] = useState({});
   const [currentOperadores] = useState({});
+  const [lineCount, setLineCount] = useState(0);
 
   useEffect(() => {
     const today = new Date();
@@ -26,14 +25,10 @@ function ExcelReader() {
   }, []);
 
   useEffect(() => {
-    if (filteredData) {
-      if (!$.fn.DataTable.isDataTable('#dataTable')) {
-        $('#dataTable').DataTable({
-          language: language,
-        });
-      }
+    if (tableData) {
+      setLineCount(tableData.length);
     }
-  }, [filteredData]);
+  }, [tableData]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -111,6 +106,7 @@ function ExcelReader() {
                 <CloudDownload />
               </button>
             </div>
+            <p>Cantidad de eventos: {lineCount}</p>
           </div>
         </div>
         <OperadoresList
