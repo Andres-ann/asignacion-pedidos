@@ -26,6 +26,14 @@ function ExcelReader() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const fileName = file.name;
+      const fileExtension = fileName.split('.').pop();
+      if (fileExtension.toLowerCase() !== 'xlsx') {
+        alert('Por favor, seleccione un archivo xlsx válido.');
+        e.target.value = ''; // Clear the input field
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target.result;
@@ -89,11 +97,12 @@ function ExcelReader() {
       <div className="container">
         <div className="text-center mt-5 mx-auto">
           <div className="card shadow p-4 mb-4">
-            <h4>Agregar archivo</h4>
+            <h4>Cargar archivo</h4>
             <div className="d-flex m-3">
               <input
                 type="file"
                 className="form-control shadow"
+                accept=".xlsx"
                 onChange={handleFileChange}
               />
               <button className="btn btn-success shadow ms-2">
