@@ -103,7 +103,11 @@ function ExcelReader() {
                 accept=".xlsx"
                 onChange={handleFileChange}
               />
-              <DownloadButton tableData={tableData} currentDate={currentDate} />
+              <DownloadButton
+                tableData={tableData}
+                currentDate={currentDate}
+                operadoresSum={operadoresSum}
+              />
             </div>
           </div>
         </div>
