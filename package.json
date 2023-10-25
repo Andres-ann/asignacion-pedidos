@@ -2,7 +2,6 @@
   "name": "asignacion-pedidos",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Andres-ann.github.io/asignacion-pedidos/build",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
