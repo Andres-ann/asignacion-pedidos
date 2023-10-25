@@ -1,16 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import language from 'datatables.net-plugins/i18n/es-ES.mjs';
 import 'datatables.net';
 
 function DataTable({ tableData, currentDate, handleBlur, handleInputChange }) {
+  const [lineCount, setLineCount] = useState(0);
+  const [pendingOperators, setPendingOperators] = useState(0);
+
   useEffect(() => {
     if (!$.fn.DataTable.isDataTable('#dataTable')) {
       $('#dataTable').DataTable({
         language: language,
       });
     }
+  }, [tableData]);
+
+  useEffect(() => {
+    setLineCount(tableData.length);
+
+    let pending = 0;
+    tableData.forEach((rowData) => {
+      if (!rowData.Operador) {
+        pending++;
+      }
+    });
+    setPendingOperators(pending);
   }, [tableData]);
 
   return (
@@ -51,6 +66,11 @@ function DataTable({ tableData, currentDate, handleBlur, handleInputChange }) {
           ))}
         </tbody>
       </table>
+      <div className="d-flex justify-content-center">
+        <p>Total eventos: {lineCount}</p>
+        <p className="ms-4 me-4">|</p>
+        <p>Eventos sin asignar: {pendingOperators}</p>
+      </div>
     </div>
   );
 }
