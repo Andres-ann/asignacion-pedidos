@@ -1,3 +1,4 @@
+// DataTable.js
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';

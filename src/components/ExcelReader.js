@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
-import { CloudDownload } from 'react-bootstrap-icons';
-import 'datatables.net-dt/css/jquery.dataTables.min.css';
-import 'datatables.net';
 
 import OperadoresList from './OperadoresList';
 import DataTable from './DataTable';
+import DownloadButton from './DownloadButton';
 
 function ExcelReader() {
   const [filteredData, setFilteredData] = useState(null);
@@ -30,7 +28,7 @@ function ExcelReader() {
       const fileExtension = fileName.split('.').pop();
       if (fileExtension.toLowerCase() !== 'xlsx') {
         alert('Por favor, seleccione un archivo xlsx válido.');
-        e.target.value = ''; // Clear the input field
+        e.target.value = '';
         return;
       }
 
@@ -105,9 +103,7 @@ function ExcelReader() {
                 accept=".xlsx"
                 onChange={handleFileChange}
               />
-              <button className="btn btn-success shadow ms-2">
-                <CloudDownload />
-              </button>
+              <DownloadButton tableData={tableData} currentDate={currentDate} />
             </div>
           </div>
         </div>
