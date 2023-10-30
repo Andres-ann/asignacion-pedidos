@@ -1,11 +1,17 @@
-// DataTable.js
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
+import 'datatables.net';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import language from 'datatables.net-plugins/i18n/es-ES.mjs';
-import 'datatables.net';
+import { Trash } from 'react-bootstrap-icons';
 
-function DataTable({ tableData, currentDate, handleBlur, handleInputChange }) {
+function DataTable({
+  tableData,
+  currentDate,
+  handleBlur,
+  handleInputChange,
+  deleteRow,
+}) {
   const [lineCount, setLineCount] = useState(0);
   const [pendingOperators, setPendingOperators] = useState(0);
 
@@ -34,6 +40,7 @@ function DataTable({ tableData, currentDate, handleBlur, handleInputChange }) {
       <table id="dataTable" className="table table-bordered table-hover m-3">
         <thead>
           <tr style={{ whiteSpace: 'nowrap' }}>
+            <th></th>
             <th>Evento</th>
             <th>Apellidos</th>
             <th>Nombres</th>
@@ -46,17 +53,29 @@ function DataTable({ tableData, currentDate, handleBlur, handleInputChange }) {
         </thead>
         <tbody>
           {tableData.map((row, rowIndex) => (
-            <tr key={rowIndex} style={{ whiteSpace: 'nowrap' }}>
+            <tr
+              key={rowIndex}
+              className="align-middle"
+              style={{ whiteSpace: 'nowrap' }}
+            >
+              <td>
+                <button
+                  className="btn text-secondary border-0"
+                  onClick={() => deleteRow(rowIndex)}
+                >
+                  <Trash />
+                </button>
+              </td>
               <td>{row['Número']}</td>
               <td>{row['Apellidos']}</td>
               <td>{row['Nombres']}</td>
               <td>{row['Tipo de Evento']}</td>
               <td>{row['Fecha de Creación']}</td>
               <td>{currentDate}</td>
-              <td className="text-center">
+              <td>
                 <input
                   type="text"
-                  className="form-control form-control-sm border-0"
+                  className="form-control form-control-sm operador border-0"
                   value={tableData[rowIndex].Operador}
                   onBlur={() => handleBlur(rowIndex)}
                   onChange={(e) => handleInputChange(e, rowIndex)}

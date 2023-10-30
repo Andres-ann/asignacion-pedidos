@@ -1,4 +1,8 @@
 body {
   font-family: 'Open Sans', sans-serif !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
+}
+
+input.operador {
+  font-size: 12px !important;
 }
