@@ -21,6 +21,26 @@ function ExcelReader() {
     setCurrentDate(dd + '/' + mm + '/' + yyyy);
   }, []);
 
+  const deleteRow = (rowIndex) => {
+    const prevValue = tableData[rowIndex].Operador;
+    setTableData((prevData) => {
+      const newData = [...prevData];
+      newData.splice(rowIndex, 1);
+      return newData;
+    });
+
+    if (prevValue) {
+      setOperadoresSum((prevSum) => {
+        const updatedSum = { ...prevSum };
+        updatedSum[prevValue] -= 1;
+        if (updatedSum[prevValue] === 0) {
+          delete updatedSum[prevValue];
+        }
+        return updatedSum;
+      });
+    }
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -123,6 +143,7 @@ function ExcelReader() {
           currentDate={currentDate}
           handleBlur={handleBlur}
           handleInputChange={handleInputChange}
+          deleteRow={deleteRow}
         />
       )}
     </div>

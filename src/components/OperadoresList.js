@@ -8,7 +8,7 @@ function OperadoresList({ operadoresSum }) {
       <div className="d-flex flex-wrap mt-2">
         {operadoresData.map((operadorInfo, index) => (
           <div
-            className="card btn shadow p-3 me-2 mb-2 border-0 text-muted"
+            className="card btn btn-sm shadow p-3 me-2 mb-2 border-0 text-muted"
             key={index}
           >
             <div>
